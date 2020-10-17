@@ -1,0 +1,15 @@
+﻿<h3>Tem certeza que deseja excluir este registro ?</h3>
+
+<button type="button" class="btn btn-block btn-success" onclick="Sim()">Sim</button>
+<button type="button" class="btn btn-block btn-danger" onclick="Nao()">Não</button>
+
+<script>
+    function Sim() {
+        window.location.href = '../../Vendedor/Excluir/' + '@ViewBag.VendedorID'
+    }
+
+    function Nao() {
+
+    }
+</script>
+

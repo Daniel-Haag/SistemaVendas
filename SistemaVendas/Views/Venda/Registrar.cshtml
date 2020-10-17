@@ -1,0 +1,138 @@
+﻿@model VendaModel
+
+<h2>Registrar venda</h2>
+
+<form asp-controller="Venda" asp-action="Registrar">
+    <input type="hidden" asp-for="ID" value="@try {@ViewBag.Venda.ID } catch { } ">
+
+    <div class="form-group">
+        <label>Cliente</label>
+        <select asp-for="clienteID" class="form-control">
+            @{
+                foreach (var item in (List<ClienteModel>)ViewBag.listaClientes)
+                {
+                    <option value="@item.Id">@item.Nome</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Vendedor</label>
+        <select asp-for="vendedorID" class="form-control">
+            @{
+                foreach (var item in (List<VendedorModel>)ViewBag.listaVendedores)
+                {
+                    <option value="@item.ID">@item.nome</option>
+                }
+            }
+        </select>
+    </div>
+
+    <label>Produtos</label>
+    <div class="form-group">
+        <div class="col-lg-9">
+            <select class="form-control" id="selectProdutos">
+                @{
+                    foreach (var item in (List<ProdutoModel>)ViewBag.listaProdutos)
+                    {
+                        <option value="@item.ID">@item.nome | @item.preco_unitario</option>
+                    }
+                }
+            </select>
+        </div>
+
+
+        <div class="col-lg-1">
+            <input type="text" class="form-control" value="1" id="txtQuantidade">
+        </div>
+
+        <div class="col-lg-2">
+            <button type="button" class="btn btn-block btn-primary" onclick="montaListaProdutos()">Adicionar</button>
+        </div>
+    </div>
+
+    <br /><br />
+
+    <table class="table table-bordered">
+
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Nome</td>
+                <td>Quantidade</td>
+                <td>Preço unitário</td>
+                <td>Total</td>
+            </tr>
+        </thead>
+        <tbody id="listaProdutos"></tbody>
+    </table>
+    <br />
+    <div class="row">
+        <div style="float:left">Total: R$ </div><div id="total" style="float:left"></div>
+    </div>
+
+    <textarea asp-for="ListaProdutosJSON" id="listaProdutosJSON" style="display:none"></textarea>
+    <input asp-for="total" id="inputTotal" class="hidden">
+
+    <br /><br />
+
+    <button type="submit" class="btn btn-block btn-success">Registrar</button>
+
+    <button type="button" class="btn btn-block btn-primary" onclick="RetornarParaListagem()">Retornar para listagem</button>
+
+
+</form>
+
+<script>
+    var Itens = new Object();
+    Itens.Produtos = new Array();
+
+    var total = 0;
+    var codigoProduto = document.getElementById("selectProdutos");
+    var qtdProduto = document.getElementById("txtQuantidade");
+    var listaProdutos = document.getElementById("listaProdutos");
+    var divTotal = document.getElementById("total");
+    var listaProdutosJSON = document.getElementById("listaProdutosJSON");
+    var inputTotal = document.getElementById("inputTotal");
+
+    function RetornarParaListagem() {
+        window.location.href = '../Venda/Index';
+    }
+
+    function montaListaProdutos() {
+
+        var textProduto = codigoProduto.options[codigoProduto.selectedIndex].text.split("|");
+        var precoUnitario = textProduto[1].replace(",",".");
+        var descricaoProduto = textProduto[0];
+        var precoUnitarioFloat = parseFloat(textProduto[1].replace(",","."));
+        
+        total += precoUnitarioFloat;
+        divTotal.innerHTML = (Math.round(total * 100) / 100);
+
+        Itens.Produtos.push({
+            "codigoProduto": codigoProduto.value,
+            "descricaoProduto": descricaoProduto,
+            "qtdProduto": qtdProduto.value,
+            "precoUnitario": precoUnitario,
+            "total": (Math.round(total * 100) / 100)
+        });
+
+        var produto =
+            "<tr>" +
+            "<td>" + codigoProduto.value + "</td>" +
+            "<td>" + codigoProduto.options[codigoProduto.selectedIndex].text + "</td>" +
+            "<td>" + qtdProduto.value + "</td>" +
+            "<td>" + precoUnitario + "</td>" +
+            "<td>" + (Math.round(total*100)/100) + "</td>" +
+            "</tr>";  
+
+        listaProdutos.innerHTML += produto;
+
+        listaProdutosJSON.innerHTML = JSON.stringify(Itens.Produtos);
+
+        inputTotal.value = divTotal.innerHTML.replace(".",",");
+       
+
+    }
+</script>

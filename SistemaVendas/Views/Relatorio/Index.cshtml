@@ -1,0 +1,14 @@
+﻿<h2>Relatórios do sistema</h2>
+
+<button class="btn btn-block btn-primary" type="button" onclick="irParaRelatorio('RelatorioVendas')">Vendas por período</button>
+<button class="btn btn-block btn-block" type="button" onclick="irParaRelatorio('Grafico')">Gráfico de vendas</button>
+<button class="btn btn-block btn-default" type="button" onclick="irParaRelatorio('')">Comissão de vendedores</button>
+
+<script>
+
+    function irParaRelatorio(relatorio) {
+        window.location.href = '../Relatorio/' + relatorio;
+    }
+
+</script>
+

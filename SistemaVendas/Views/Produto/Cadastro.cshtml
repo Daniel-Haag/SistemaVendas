@@ -1,0 +1,43 @@
+﻿@model ProdutoModel
+
+<h3>Cadastro de Produtos</h3>
+
+<form asp-controller="Produto" asp-action="Cadastro">
+    <input type="hidden" asp-for="ID" value="@try {@ViewBag.Produto.ID } catch { } ">
+
+    <div class="form-group">
+        <label>Nome</label>
+        <input asp-for="nome" type="text" class="form-control" value="@try {@ViewBag.Produto.nome } catch { }" />
+        <span asp-validation-for="nome" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Descrição</label>
+        <input asp-for="descricao" type="text" class="form-control" value="@try {@ViewBag.Produto.descricao } catch { }" />
+        <span asp-validation-for="descricao" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Preço unitário</label>
+        <input asp-for="preco_unitario" type="text" class="form-control" value="@try {@ViewBag.Produto.preco_unitario } catch { }" />
+        <span asp-validation-for="preco_unitario" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Quantidade em estoque</label>
+        <input asp-for="quantidade_estoque" type="text" class="form-control" value="@try {@ViewBag.Produto.quantidade_estoque } catch { }" />
+        <span asp-validation-for="quantidade_estoque" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Unidade de medida</label>
+        <input asp-for="unidade_medida" type="text" class="form-control" value="@try {@ViewBag.Produto.unidade_medida } catch { }" />
+        <span asp-validation-for="unidade_medida" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Link da Imagem</label>
+        <input asp-for="link_foto" type="text" class="form-control" value="@try {@ViewBag.Produto.link_foto } catch { }" />
+        <span asp-validation-for="link_foto" class="text-danger"></span>
+    </div>
+    
+    <button type="submit" class="btn btn-success">Cadastrar</button>
+
+</form>
+
+

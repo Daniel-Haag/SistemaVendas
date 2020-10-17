@@ -1,0 +1,72 @@
+﻿<h3>Lista de Produtos</h3>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço Unitário</th>
+            <th>Quantidade Em Estoque</th>
+            <th>Unidade De Medida</th>
+            <th>Imagem</th>
+            <th>Editar</th>
+            <th>Excluir</th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        @{
+            foreach (var item in (List<ProdutoModel>)ViewBag.ListaDeProdutos)
+            {
+                <tr>
+                    <td>
+                        @item.ID
+                    </td>
+                    <td>
+                        @item.nome
+                    </td>
+                    <td>
+                        @item.descricao
+                    </td>
+                    <td>
+                        @item.preco_unitario
+                    </td>
+                    <td>
+                        @item.quantidade_estoque
+                    </td>
+                    <td>
+                        @item.unidade_medida
+                    </td>
+                    <td>
+                        @item.link_foto
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" type="button" onclick="Editar(@item.ID)">Editar</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" type="button" onclick="Excluir(@item.ID)">Excluir</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<br />
+<button class="btn btn-success" type="button" onclick="Cadastrar()">Cadastrar Produto</button>
+<script>
+
+    function Cadastrar() {
+        window.location.href = '../Produto/Cadastro'
+    }
+
+    function Editar(ID) {
+        window.location.href = '../Produto/Cadastro/' + ID
+    }
+
+    function Excluir(ID) {
+        window.location.href = '../Produto/Excluir/' + ID
+    }
+
+</script>
